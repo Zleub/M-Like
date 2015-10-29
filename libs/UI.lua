@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-27 11:55:09
--- :ddddddddddhyyddddddddddd: Modified: 2015-10-28 16:59:19
+-- :ddddddddddhyyddddddddddd: Modified: 2015-10-28 20:12:00
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -32,7 +32,7 @@ function UI.container(position, size)
 				if last_elem.position.x + last_elem.size.x + elem.size.x < self.position.x + self.size.x then
 					elem.position.x = last_elem.position.x + last_elem.size.x
 					if last_elem.position.y > elem.position.y then
-						elem.position.y = last_elem.position.y 
+						elem.position.y = last_elem.position.y
 					end
 				else
 					elem.position.y = last_elem.position.y + last_elem.size.y
@@ -57,16 +57,14 @@ function UI.button(position, size, label, callback)
 		size = size,
 		content = callback,
 		label = label,
-		mousepressed = function (self, x, y, button)
-			if self.position.x < x and x < self.position.x + self.size.x and 
-				self.position.y < y and y < self.position.y + self.size.y and 
-				button == 'l' then
+		mousepressed = function (self, point, button)
+			if point:isBoxedFromCorner(self.position, self.size) and button == 'l' then
 				self:content()
 			end
 		end,
 		draw = function (self)
 			if self.label then
-				love.graphics.print(self.label, self.position.x, self.position.y)	
+				love.graphics.print(self.label, self.position.x, self.position.y)
 			end
 			if love.mode == 'debug' then
 				love.graphics.rectangle('line', self.position.x, self.position.y, self.size.x, self.size.y)
@@ -84,14 +82,15 @@ function UI.image(position, size, image)
 		position = position,
 		size = size,
 		content = image,
-		update = function (self, x, y, button)
-			if self:trigger() then
-				print(self, x, y, button)
+		mousepressed = function (self, point, button)
+			if point:isBoxedFromCorner(self.position, self.size) and button == 'l' then
+				print('I guess i should load an event')
+				Event.content = self.content
 			end
 		end,
 		draw = function (self)
-			local sx = self.size.x / self.content:getWidth() 
-			local sy = self.size.y / self.content:getHeight() 
+			local sx = self.size.x / self.content:getWidth()
+			local sy = self.size.y / self.content:getHeight()
 
 			if love.mode == 'debug' then
 				love.graphics.rectangle('line', self.position.x, self.position.y, self.size.x, self.size.y)
@@ -104,7 +103,6 @@ function UI.image(position, size, image)
 
 	table.insert(UI.queue, i)
 	Event:register('mousepressed', i)
-	Event:register('mousereleased', i)
 	return i
 end
 

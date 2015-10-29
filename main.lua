@@ -6,21 +6,20 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-10-28 16:58:34
+-- :ddddddddddhyyddddddddddd: Modified: 2015-10-29 04:01:39
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
 --      .+ydddddddddhs/.
 --          .-::::-`
 
-face = love.graphics.newImage('assets/image.bmp')
-image = love.graphics.newImage('assets/tile.png')
-
 UI = require 'libs.UI'
 Event = require 'libs.Event'
 Meshes = require 'libs.Meshes'
+Quadlist = require 'libs.Quadlist'
 Point = require 'libs.Point'
 Vertice = require 'libs.Vertice'
+Entity = require 'libs.Entity'
 
 inspect = require 'libs.inspect'
 
@@ -32,19 +31,36 @@ Modes =  {
 	'debug'
 }
 
-love.mode = 'debug'
+love.mode = 'editor'
 
 function love.mousepressed(x, y, button)
 	for i,v in ipairs(Event.mousepressed) do
-		v:mousepressed(x, y, button)
+		v:mousepressed(Point.new(x, y), button)
 	end
 end
 
+function love.mousereleased(x, y, button)
+	for i,v in ipairs(Event.mousereleased) do
+		v:mousereleased(Point.new(x, y), button)
+	end
+	print(inspect(Event.content))
+end
+
 function love.load()
+
+	face = love.graphics.newImage('assets/image.bmp')
+	image = love.graphics.newImage('assets/tile.png')
+
+	player_image = love.graphics.newImage('assets/PlayerLeft.png')
+	player_image:setFilter('nearest', 'nearest')
+	player_quad = Quadlist.new({image = player_image, width = 8, height = 8})
+
+
+
 	v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight() / 2, 50)
-	Meshes:add(v.table, image)
+	Meshes:add(v, image)
 	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() / 2 - 50 , 50)
-	Meshes:add(v.table, image)
+	Meshes:add(v, image)
 
 	local button = UI.button(
 		Point.new(0, 0),
@@ -78,8 +94,10 @@ function love.load()
 		''
 	)
 
-	local i = UI.image(Point.new(0, 0), Point.new(100, 100), image)
-	local i2 = UI.image(Point.new(0, 0), Point.new(100, 100), face)
+	local i = UI.image(Point.new(0, 0), Point.new(50, 50), image)
+	local i2 = UI.image(Point.new(0, 0), Point.new(50, 50), face)
+
+	player = Entity.player(player_quad)
 
 	UI.container(Point.new(10, 10), Point.new(250, 300))
 	:insert(button)
@@ -91,9 +109,11 @@ function love.load()
 end
 
 function love.update(dt)
+	player:update(dt)
 end
 
 function love.draw()
 	Meshes:draw()
 	UI:draw()
+	player:draw()
 end

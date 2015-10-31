@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-29 03:48:46
--- :ddddddddddhyyddddddddddd: Modified: 2015-10-29 04:00:29
+-- :ddddddddddhyyddddddddddd: Modified: 2015-10-31 19:23:19
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -18,7 +18,7 @@ local Quadlist = {}
 function Quadlist.new(tileset)
 	local i = 0
 	local j = 0
-	local q = {}
+	local q = { tileset = tileset }
 	local w, h = tileset.image:getDimensions()
 
 	q[0] = tileset.image

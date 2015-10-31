@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-27 11:55:09
--- :ddddddddddhyyddddddddddd: Modified: 2015-10-28 20:12:00
+-- :ddddddddddhyyddddddddddd: Modified: 2015-10-31 19:31:48
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -97,6 +97,35 @@ function UI.image(position, size, image)
 			end
 			if love.mode == 'editor' then
 				love.graphics.draw(self.content, self.position.x, self.position.y, 0, sx, sy)
+			end
+		end
+	}
+
+	table.insert(UI.queue, i)
+	Event:register('mousepressed', i)
+	return i
+end
+
+function UI.quad(position, size, quadlist, index)
+	local i = {
+		position = position,
+		size = size,
+		content = quadlist,
+		mousepressed = function (self, point, button)
+			if point:isBoxedFromCorner(self.position, self.size) and button == 'l' then
+				print('I guess i should load an event')
+				Event.content = self.content[index]
+			end
+		end,
+		draw = function (self)
+			local sx = self.size.x / self.content.tileset.width
+			local sy = self.size.y / self.content.tileset.height
+
+			if love.mode == 'debug' then
+				love.graphics.rectangle('line', self.position.x, self.position.y, self.size.x, self.size.y)
+			end
+			if love.mode == 'editor' then
+				love.graphics.draw(self.content[0], self.content[index], self.position.x, self.position.y, 0, sx, sy)
 			end
 		end
 	}

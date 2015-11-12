@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:41:59
--- :ddddddddddhyyddddddddddd: Modified: 2015-10-29 04:13:01
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-12 02:26:14
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -27,6 +27,10 @@ end
 
 function Point.seum(A, B)
 	return Point.new(A.x + B.x, A.y + B.y)
+end
+
+function Point.mul(A, B)
+	return Point.new(A.x * B.x, A.y * B.y)
 end
 
 function Point.new(x, y)

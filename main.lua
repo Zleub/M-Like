@@ -6,13 +6,14 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-10-31 19:30:25
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-12 02:52:23
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
 --      .+ydddddddddhs/.
 --          .-::::-`
 
+Lib = require 'libs.Lib'
 UI = require 'libs.UI'
 Event = require 'libs.Event'
 Meshes = require 'libs.Meshes'
@@ -33,6 +34,18 @@ Modes =  {
 
 love.mode = 'editor'
 
+function love.keypressed(key)
+	for i,v in ipairs(Event.keypressed) do
+		v:keypressed(key)
+	end
+end
+
+function love.keyreleased(key)
+	for i,v in ipairs(Event.keyreleased) do
+		v:keyreleased(key)
+	end
+end
+
 function love.mousepressed(x, y, button)
 	for i,v in ipairs(Event.mousepressed) do
 		v:mousepressed(Point.new(x, y), button)
@@ -43,7 +56,10 @@ function love.mousereleased(x, y, button)
 	for i,v in ipairs(Event.mousereleased) do
 		v:mousereleased(Point.new(x, y), button)
 	end
-	print(inspect(Event.content))
+end
+
+function love.gamepadpressed( joystick, button )
+	print ( joystick, button )
 end
 
 function love.load()
@@ -55,9 +71,9 @@ function love.load()
 	player_image:setFilter('nearest', 'nearest')
 	player_quad = Quadlist.new({image = player_image, width = 8, height = 8})
 
-	v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight() / 2, 50)
+	v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight(), 50)
 	Meshes:add(v, image)
-	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() / 2 - 50 , 50)
+	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 50)
 	Meshes:add(v, image)
 
 	local button = UI.button(
@@ -109,6 +125,7 @@ function love.load()
 end
 
 function love.update(dt)
+	love.last_dt = dt
 	player:update(dt)
 end
 

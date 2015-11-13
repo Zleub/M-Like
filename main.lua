@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-13 08:57:46
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-13 09:17:44
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -75,10 +75,17 @@ function love.load()
 	tiles_image:setFilter('nearest', 'nearest')
 	tiles_quad = Quadlist.new({image = tiles_image, width = 8, height = 8})
 
-	v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight(), 50)
-	Meshes:add(v, image)
-	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 50)
-	Meshes:add(v, image)
+	for i=1, love.window.getWidth() ,42 do
+		for j=1,love.window.getHeight(),42 do
+			v = Vertice.newFromCenter(i, j, 21)
+			Meshes:add(v, tiles_quad.images[6])
+		end
+	end
+
+	-- v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight(), 42)
+	-- Meshes:add(v, image)
+	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 42)
+	-- Meshes:add(v, image)
 
 	local button = UI.button(
 		Point.new(0, 0),

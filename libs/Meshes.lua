@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:48:39
--- :ddddddddddhyyddddddddddd: Modified: 2015-10-28 20:27:30
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-13 09:15:43
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -41,7 +41,7 @@ end
 
 function Meshes:draw()
 	for i,v in ipairs(self.queue) do
-		love.graphics.draw(v.mesh)
+		if v.mesh then love.graphics.draw(v.mesh) end
 	end
 end
 

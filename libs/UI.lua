@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-27 11:55:09
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-13 09:00:02
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-13 09:18:07
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -65,9 +65,9 @@ function UI.button(position, size, label, callback)
 		draw = function (self)
 			if self.label then
 				love.graphics.rectangle('fill', self.position.x, self.position.y, self.size.x, self.size.y)
-				love.graphics.setColor(0, 0, 0)
+				love.graphics.setColor(0, 0, 0, 255)
 				love.graphics.print(self.label, self.position.x, self.position.y)
-				love.graphics.setColor(255, 255, 255)
+				love.graphics.setColor(255, 255, 255, 255)
 			end
 			if love.mode == 'debug' then
 				love.graphics.rectangle('line', self.position.x, self.position.y, self.size.x, self.size.y)

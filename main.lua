@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-12 02:52:23
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-13 08:57:46
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -71,6 +71,10 @@ function love.load()
 	player_image:setFilter('nearest', 'nearest')
 	player_quad = Quadlist.new({image = player_image, width = 8, height = 8})
 
+	tiles_image = love.graphics.newImage('assets/Tiles_Basic.png')
+	tiles_image:setFilter('nearest', 'nearest')
+	tiles_quad = Quadlist.new({image = tiles_image, width = 8, height = 8})
+
 	v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight(), 50)
 	Meshes:add(v, image)
 	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 50)
@@ -108,19 +112,20 @@ function love.load()
 		''
 	)
 
-	local i = UI.image(Point.new(0, 0), Point.new(50, 50), image)
-	local i2 = UI.image(Point.new(0, 0), Point.new(50, 50), face)
-	local i3 = UI.quad(Point.new(0, 0), Point.new(50, 50), player_quad, 1)
-
-	player = Entity.player(player_quad)
-
-	UI.container(Point.new(10, 10), Point.new(250, 300))
+	local container = UI.container(Point.new(10, 10), Point.new(250, 300))
 	:insert(button)
 	:insert(text)
 	:insert(text2)
-	:insert(i)
-	:insert(i2)
-	:insert(i3)
+
+	-- local i = UI.image(Point.new(0, 0), Point.new(50, 50), image)
+	-- local i2 = UI.image(Point.new(0, 0), Point.new(50, 50), face)
+	for i,v in ipairs(tiles_quad.images) do
+		container:insert( UI.image(Point.new(0, 0), Point.new(50, 50), v) )
+	end
+	-- local i3 = UI.quad(Point.new(0, 0), Point.new(50, 50), player_quad, 1)
+
+	player = Entity.player(player_quad)
+
 
 end
 

@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:48:39
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-13 09:15:43
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-14 22:58:07
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -18,7 +18,7 @@ Meshes.queue = {}
 
 function Meshes:add(vertice, image)
 	local m = {
-		vertice = vertice,
+		vertice = vertice, -- handle a collides method
 		mousereleased = function(self, point, button)
 			if self.vertice:collides(point) and button == 'l' then
 				print('I should get something to load')
@@ -32,11 +32,19 @@ function Meshes:add(vertice, image)
 		mesh = love.graphics.newMesh(vertice.table, image, 'fan')
 	}
 
-
-
 	Event:register('mousereleased', m)
 	table.insert(self.queue, m)
 
+end
+
+function Meshes:seekCollision(point)
+
+	local w,h = love.window.getDimensions()
+	for i,v in ipairs(self.queue) do
+		if 0 < v.center.x and v.center.x < w and
+			0 < v.center.y and v.center.y < h then
+
+	end
 end
 
 function Meshes:draw()

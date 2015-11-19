@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-13 09:17:44
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-19 14:55:11
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -34,34 +34,6 @@ Modes =  {
 
 love.mode = 'editor'
 
-function love.keypressed(key)
-	for i,v in ipairs(Event.keypressed) do
-		v:keypressed(key)
-	end
-end
-
-function love.keyreleased(key)
-	for i,v in ipairs(Event.keyreleased) do
-		v:keyreleased(key)
-	end
-end
-
-function love.mousepressed(x, y, button)
-	for i,v in ipairs(Event.mousepressed) do
-		v:mousepressed(Point.new(x, y), button)
-	end
-end
-
-function love.mousereleased(x, y, button)
-	for i,v in ipairs(Event.mousereleased) do
-		v:mousereleased(Point.new(x, y), button)
-	end
-end
-
-function love.gamepadpressed( joystick, button )
-	print ( joystick, button )
-end
-
 function love.load()
 
 	face = love.graphics.newImage('assets/image.bmp')
@@ -75,17 +47,19 @@ function love.load()
 	tiles_image:setFilter('nearest', 'nearest')
 	tiles_quad = Quadlist.new({image = tiles_image, width = 8, height = 8})
 
-	for i=1, love.window.getWidth() ,42 do
-		for j=1,love.window.getHeight(),42 do
-			v = Vertice.newFromCenter(i, j, 21)
-			Meshes:add(v, tiles_quad.images[6])
-		end
-	end
+	-- for i=1, love.window.getWidth() ,42 do
+	-- 	for j=1,love.window.getHeight(),42 do
+	-- 		v = Vertice.newFromCenter(i, j, 21)
+	-- 		Meshes:add(v, tiles_quad.images[6])
+	-- 	end
+	-- end
 
-	-- v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight(), 42)
-	-- Meshes:add(v, image)
-	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 42)
-	-- Meshes:add(v, image)
+	v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight(), 42)
+	Meshes:add(v, tiles_quad.images[3])
+	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 42)
+	Meshes:add(v, tiles_quad.images[3])
+	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 100, love.window.getHeight() - 100 , 42)
+	Meshes:add(v, tiles_quad.images[3])
 
 	local button = UI.button(
 		Point.new(0, 0),

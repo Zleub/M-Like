@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:41:59
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-12 02:26:14
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-19 14:42:25
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -40,6 +40,10 @@ function Point.new(x, y)
 		isBoxedFromCenter = Point.isBoxedFromCenter,
 		isBoxedFromCorner = Point.isBoxedFromCorner
 	}
+end
+
+function Point.draw(point)
+	love.graphics.point(point.x, point.y)
 end
 
 return Point

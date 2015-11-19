@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-19 14:55:11
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-19 17:08:39
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -54,11 +54,15 @@ function love.load()
 	-- 	end
 	-- end
 
-	v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight(), 42)
+	v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight() -1 , 21)
 	Meshes:add(v, tiles_quad.images[3])
-	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 42)
+	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 21)
 	Meshes:add(v, tiles_quad.images[3])
-	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 100, love.window.getHeight() - 100 , 42)
+	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 100, love.window.getHeight() - 100 , 21)
+	Meshes:add(v, tiles_quad.images[3])
+	v = Vertice.newFromCenter(love.window.getWidth() / 2 + 50, love.window.getHeight() - 50 , 21)
+	Meshes:add(v, tiles_quad.images[3])
+	v = Vertice.newFromCenter(love.window.getWidth() / 2 + 100, love.window.getHeight() - 100 , 21)
 	Meshes:add(v, tiles_quad.images[3])
 
 	local button = UI.button(

@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:41:59
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-19 14:42:25
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-19 19:13:22
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -38,7 +38,7 @@ function Point.new(x, y)
 		x = x,
 		y = y,
 		isBoxedFromCenter = Point.isBoxedFromCenter,
-		isBoxedFromCorner = Point.isBoxedFromCorner
+		isBoxedFromCorner = Point.isBoxedFromCorner,
 	}
 end
 

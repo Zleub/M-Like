@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-28 20:31:30
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-19 18:45:48
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-20 18:30:59
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -29,21 +29,21 @@ function Entity.player(quadlist)
 	p.keypressed = function (self, key)
 		if key == 'left' then self.scale.x = self.Pscale.x end
 		if key == 'right' then self.scale.x = self.Pscale.x * -1 end
-		if key == ' ' then self.velocity.y = - 70 end
+		if key == ' ' then self.velocity.y = - 6 end
 	end
 	p.keyreleased = function (self, key)
 		if key == 'left' or key == 'right' then self.velocity.x = 0 end
 	end
 	p.update = function (self, dt)
 		p.time = p.time + dt * 10
-		self.velocity.y = self.velocity.y + dt * 100
+		self.velocity.y = self.velocity.y + dt * 42
 
 		local A, B = 0, 0
 		if love.keyboard.isDown('left') then
-			A = Lib.clamp(-self.speed - dt * 10, -self.speed, 0)
+			A = Lib.clamp(0 - dt * 750, -self.speed, 0)
 		end
 		if love.keyboard.isDown('right') then
-			B = Lib.clamp(self.speed + dt * 10, 0, self.speed)
+			B = Lib.clamp(0 + dt * 750, 0, self.speed)
 		end
 		self.velocity.x = B + A
 
@@ -59,7 +59,6 @@ function Entity.player(quadlist)
 			self.position.y = Lib.clamp(self.position.y + self.velocity.y, self.position.y , test.center.y - test.size - self.size.y)
 			self.velocity.y = 0
 			self.position.x = self.position.x + self.velocity.x
-			return
 		end
 
 		local test = Meshes:seekCollision(Point.new(self.position.x + self.size.x / 2, self.position.y + self.size.y / 2))
@@ -71,9 +70,8 @@ function Entity.player(quadlist)
 			self.position.x = Lib.clamp(self.position.x + self.velocity.x, test.center.x + test.size + self.size.x / 2, self.position.x)
 		end
 
-		-- print(dt)
 		self.position = Point.seum(self.position, self.velocity)
-		self.position.y = Lib.clamp(self.position.y + self.size.y, 0, love.window.getHeight() - self.size.y)
+		self.position.y = Lib.clamp(self.position.y, 0, love.window.getHeight() - self.size.y)
 	end
 	p.draw = function (self)
 		if self.scale.x > 0 then
@@ -83,7 +81,7 @@ function Entity.player(quadlist)
 		end
 
 		love.graphics.point(self.position.x, self.position.y + self.size.y)
-		if ttest then love.graphics.point(self.position.x, ttest) end
+
 	end
 
 	Event:register('keypressed', p)

@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-19 17:08:39
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-20 18:29:58
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -54,16 +54,40 @@ function love.load()
 	-- 	end
 	-- end
 
-	v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight() -1 , 21)
-	Meshes:add(v, tiles_quad.images[3])
-	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 21)
-	Meshes:add(v, tiles_quad.images[3])
-	v = Vertice.newFromCenter(love.window.getWidth() / 2 - 100, love.window.getHeight() - 100 , 21)
-	Meshes:add(v, tiles_quad.images[3])
-	v = Vertice.newFromCenter(love.window.getWidth() / 2 + 50, love.window.getHeight() - 50 , 21)
-	Meshes:add(v, tiles_quad.images[3])
-	v = Vertice.newFromCenter(love.window.getWidth() / 2 + 100, love.window.getHeight() - 100 , 21)
-	Meshes:add(v, tiles_quad.images[3])
+	local size = 42
+	for i=love.window.getWidth() - (size * 10), love.window.getWidth() ,size do
+		local v = Vertice.newFromCenter(i, love.window.getHeight() - size / 2 , size / 2)
+		Meshes:add(v, tiles_quad.images[3])
+	end
+
+	local size = 42
+	for i=0, size * 5 ,size do
+		local v = Vertice.newFromCenter(i, love.window.getHeight() - (size + 10) * 2 , size / 2)
+		Meshes:add(v, tiles_quad.images[3])
+	end
+
+	local size = 42
+	for i=love.window.getWidth() - (size * 10), love.window.getWidth() ,size do
+		local v = Vertice.newFromCenter(i, love.window.getHeight() - size * 4 , size / 2)
+		Meshes:add(v, tiles_quad.images[3])
+	end
+
+	local size = 42
+	for i=love.window.getHeight() - (size * 10), love.window.getHeight() ,size do
+		local v = Vertice.newFromCenter(love.window.getWidth() - size / 2, i , size / 2)
+		Meshes:add(v, tiles_quad.images[3])
+	end
+
+	-- v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight() -1 , 21)
+	-- Meshes:add(v, tiles_quad.images[3])
+	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 21)
+	-- Meshes:add(v, tiles_quad.images[3])
+	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 - 100, love.window.getHeight() - 100 , 21)
+	-- Meshes:add(v, tiles_quad.images[3])
+	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 + 50, love.window.getHeight() - 50 , 21)
+	-- Meshes:add(v, tiles_quad.images[3])
+	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 + 100, love.window.getHeight() - 100 , 21)
+	-- Meshes:add(v, tiles_quad.images[3])
 
 	local button = UI.button(
 		Point.new(0, 0),

@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-20 18:29:58
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-21 19:14:21
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -14,7 +14,7 @@
 --          .-::::-`
 
 Lib = require 'libs.Lib'
-UI = require 'libs.UI'
+UI = require 'libs.loveframes'
 Event = require 'libs.Event'
 Meshes = require 'libs.Meshes'
 Quadlist = require 'libs.Quadlist'
@@ -35,7 +35,6 @@ Modes =  {
 love.mode = 'editor'
 
 function love.load()
-
 	face = love.graphics.newImage('assets/image.bmp')
 	image = love.graphics.newImage('assets/tile.png')
 
@@ -46,13 +45,6 @@ function love.load()
 	tiles_image = love.graphics.newImage('assets/Tiles_Basic.png')
 	tiles_image:setFilter('nearest', 'nearest')
 	tiles_quad = Quadlist.new({image = tiles_image, width = 8, height = 8})
-
-	-- for i=1, love.window.getWidth() ,42 do
-	-- 	for j=1,love.window.getHeight(),42 do
-	-- 		v = Vertice.newFromCenter(i, j, 21)
-	-- 		Meshes:add(v, tiles_quad.images[6])
-	-- 	end
-	-- end
 
 	local size = 42
 	for i=love.window.getWidth() - (size * 10), love.window.getWidth() ,size do
@@ -78,73 +70,37 @@ function love.load()
 		Meshes:add(v, tiles_quad.images[3])
 	end
 
-	-- v = Vertice.newFromCenter(love.window.getWidth() / 2, love.window.getHeight() -1 , 21)
-	-- Meshes:add(v, tiles_quad.images[3])
-	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 - 50, love.window.getHeight() - 50 , 21)
-	-- Meshes:add(v, tiles_quad.images[3])
-	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 - 100, love.window.getHeight() - 100 , 21)
-	-- Meshes:add(v, tiles_quad.images[3])
-	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 + 50, love.window.getHeight() - 50 , 21)
-	-- Meshes:add(v, tiles_quad.images[3])
-	-- v = Vertice.newFromCenter(love.window.getWidth() / 2 + 100, love.window.getHeight() - 100 , 21)
-	-- Meshes:add(v, tiles_quad.images[3])
-
-	local button = UI.button(
-		Point.new(0, 0),
-		Point.new(100, 20),
-
-		'Change mode:',
-		function (self)
-			for i,v in ipairs(Modes) do
-				if love.mode == v and i ~= #Modes then
-					love.mode = Modes[i + 1]
-					return
-				elseif i == #Modes then
-					love.mode = Modes[1]
-					return
-				end
-			end
-
-			love.mode = Modes[index + 1]
-		end
-	)
-
-	local text = UI.text(
-		Point.new(0, 0),
-		Point.new(100, 20),
-		love, 'mode'
-	)
-
-	local text2 = UI.text(
-		Point.new(0, 0),
-		Point.new(250, 20),
-		''
-	)
-
-	local container = UI.container(Point.new(10, 10), Point.new(250, 300))
-	:insert(button)
-	:insert(text)
-	:insert(text2)
-
-	-- local i = UI.image(Point.new(0, 0), Point.new(50, 50), image)
-	-- local i2 = UI.image(Point.new(0, 0), Point.new(50, 50), face)
-	for i,v in ipairs(tiles_quad.images) do
-		container:insert( UI.image(Point.new(0, 0), Point.new(50, 50), v) )
-	end
-	-- local i3 = UI.quad(Point.new(0, 0), Point.new(50, 50), player_quad, 1)
 
 	player = Entity.player(player_quad)
 
-
+	local slider_jump = UI.Create("slider")
+		slider_jump:SetPos(42, 30)
+		slider_jump:SetWidth(100)
+		slider_jump:SetMinMax(0, 1000)
+		slider_jump.value = player.Xaxis
+		slider_jump.Update = function (object, dt)
+			player.Xaxis = math.floor(object.value)
+		end
+	local slider_gravity = UI.Create("slider")
+		slider_jump:SetPos(42, 30)
+		slider_jump:SetWidth(100)
+		slider_jump:SetMinMax(0, 1000)
+		slider_jump.value = player.Xaxis
+		slider_jump.Update = function (object, dt)
+			player.Xaxis = math.floor(object.value)
+		end
 end
 
 function love.update(dt)
 	love.last_dt = dt
 	player:update(dt)
+	UI.update(dt)
 end
 
 function love.draw()
-	Meshes:draw()
+	love.graphics.print('Movement Speed', 5, 30)
+	love.graphics.print(player.Xaxis, 5, 30)
 	UI:draw()
+	Meshes:draw()
 	player:draw()
 end

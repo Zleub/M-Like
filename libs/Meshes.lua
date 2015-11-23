@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:48:39
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-21 17:43:21
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-23 21:39:27
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -34,7 +34,12 @@ function Meshes:add(vertice, image)
 
 	Event:register('mousereleased', m)
 	table.insert(self.queue, m)
+end
 
+function Meshes:move(point)
+	for k,v in ipairs(self.queue) do
+		v:move(point)
+	end
 end
 
 function Meshes:seekCollision(point)

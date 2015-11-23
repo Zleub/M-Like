@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-28 20:31:30
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-21 19:13:32
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-23 21:43:58
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -20,34 +20,34 @@ function Entity.player(quadlist)
 
 	p.time = 0
 	p.index = 1
-	p.speed = 4
+	p.speed = 2
 	p.size = Point.new(42, 42)
 	p.scale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
 	p.Pscale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
 	p.position = Point.new(100, 100)
 	p.velocity = Point.new(0, 0)
 
-	p.Yaxis = 42
-	p.Xaxis = 666
+	p.mass = 42
+	p.speed_mul = 200
 
 	p.keypressed = function (self, key)
 		if key == 'left' then self.scale.x = self.Pscale.x end
 		if key == 'right' then self.scale.x = self.Pscale.x * -1 end
-		if key == ' ' then self.velocity.y = - 4 end
+		if key == ' ' and self.velocity.y == 0 then self.velocity.y = - 4 end
 	end
 	p.keyreleased = function (self, key)
 		if key == 'left' or key == 'right' then self.velocity.x = 0 end
 	end
 	p.update = function (self, dt)
 		p.time = p.time + dt * 10
-		self.velocity.y = self.velocity.y + dt * self.Yaxis
+		self.velocity.y = self.velocity.y + dt * self.mass
 
 		local A, B = 0, 0
 		if love.keyboard.isDown('left') then
-			A = Lib.clamp(0 - dt * self.Xaxis, -self.speed, 0)
+			A = Lib.clamp(self.velocity.x - dt * self.speed_mul, -self.speed, 0)
 		end
 		if love.keyboard.isDown('right') then
-			B = Lib.clamp(0 + dt * self.Xaxis, 0, self.speed)
+			B = Lib.clamp(self.velocity.x + dt * self.speed_mul, 0, self.speed)
 		end
 		self.velocity.x = B + A
 
@@ -73,6 +73,8 @@ function Entity.player(quadlist)
 			self.position.x = Lib.clamp(self.position.x + self.velocity.x, test.center.x + test.size + self.size.x / 2, self.position.x)
 		end
 
+		-- I NEED THE VELOCITY TO BE TO RECIPIENT OF A FRAME MOVEMENT
+		-- such as self.velocity can be the only thing applied to the position
 		self.position = Point.seum(self.position, self.velocity)
 		self.position.y = Lib.clamp(self.position.y, 0, love.window.getHeight() - self.size.y)
 		if self.position.y == love.window.getHeight() - self.size.y then self.velocity.y = 0 end

@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-21 19:14:21
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-23 21:44:08
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -74,32 +74,35 @@ function love.load()
 	player = Entity.player(player_quad)
 
 	local slider_jump = UI.Create("slider")
-		slider_jump:SetPos(42, 30)
+		slider_jump:SetPos(42, 50)
 		slider_jump:SetWidth(100)
 		slider_jump:SetMinMax(0, 1000)
-		slider_jump.value = player.Xaxis
+		slider_jump.value = player.speed_mul
 		slider_jump.Update = function (object, dt)
-			player.Xaxis = math.floor(object.value)
+			player.speed_mul = math.floor(object.value)
 		end
 	local slider_gravity = UI.Create("slider")
-		slider_jump:SetPos(42, 30)
-		slider_jump:SetWidth(100)
-		slider_jump:SetMinMax(0, 1000)
-		slider_jump.value = player.Xaxis
-		slider_jump.Update = function (object, dt)
-			player.Xaxis = math.floor(object.value)
+		slider_gravity:SetPos(42, 100)
+		slider_gravity:SetWidth(100)
+		slider_gravity:SetMinMax(0, 100)
+		slider_gravity.value = player.mass
+		slider_gravity.Update = function (object, dt)
+			player.mass = math.floor(object.value)
 		end
 end
 
 function love.update(dt)
 	love.last_dt = dt
 	player:update(dt)
+	-- Meshes:move(pla)
 	UI.update(dt)
 end
 
 function love.draw()
-	love.graphics.print('Movement Speed', 5, 30)
-	love.graphics.print(player.Xaxis, 5, 30)
+	love.graphics.print('Speed mult', 5, 30)
+	love.graphics.print(player.speed_mul, 150, 30)
+	love.graphics.print('Mass', 5, 80)
+	love.graphics.print(player.mass, 50, 80)
 	UI:draw()
 	Meshes:draw()
 	player:draw()

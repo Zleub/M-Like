@@ -6,4 +6,8 @@ function lib.clamp(num, min, max)
 	else return num end
 end
 
+function lib.debug(obj)
+		print(inspect(obj))
+end
+
 return lib

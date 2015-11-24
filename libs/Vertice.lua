@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:14:39
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-23 21:38:11
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-24 19:21:41
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -26,6 +26,9 @@ function Vertice.newFromCenter(x, y, size)
 		end
 	end
 	v.move = function (self, point)
+		-- Lib.debug(point)
+		self.center.x = self.center.x + point.x
+		self.center.y = self.center.y + point.y
 		for i,v in ipairs(self.table) do
 			v[1] = v[1] + point.x
 			v[2] = v[2] + point.y
@@ -51,7 +54,7 @@ function Vertice.newFromCenter(x, y, size)
 			x - size, y + size,
 			0, 1,
 			255, 255, 255
-		},
+		}
 		-- {
 		-- 	x - size / 8, y - size / 2,
 		-- 	0, 0,

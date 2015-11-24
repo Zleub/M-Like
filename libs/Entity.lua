@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-28 20:31:30
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-24 14:36:02
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-24 19:28:50
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -20,20 +20,22 @@ function Entity.player(quadlist)
 
 	p.time = 0
 	p.index = 1
-	p.speed_max = 2
 	p.size = Point.new(42, 42)
 	p.scale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
 	p.Pscale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
 	p.position = Point.new(100, 100)
 	p.velocity = Point.new(0, 0)
 
+	-- Watched
+	p.speed_mul = 50
 	p.mass = 42
-	p.speed_mul = 200
+	p.speed_max = 8
+	p.jump = 12
 
 	p.keypressed = function (self, key)
 		if key == 'left' then self.scale.x = self.Pscale.x end
 		if key == 'right' then self.scale.x = self.Pscale.x * -1 end
-		if key == ' ' and self.velocity.y == 0 then self.velocity.y = - 4 end
+		if key == ' ' and self.velocity.y == 0 then self.velocity.y = -self.jump end
 	end
 	p.keyreleased = function (self, key)
 		if key == 'left' or key == 'right' then self.velocity.x = 0 end

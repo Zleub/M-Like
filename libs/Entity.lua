@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-28 20:31:30
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-23 21:43:58
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-24 14:36:02
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -20,7 +20,7 @@ function Entity.player(quadlist)
 
 	p.time = 0
 	p.index = 1
-	p.speed = 2
+	p.speed_max = 2
 	p.size = Point.new(42, 42)
 	p.scale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
 	p.Pscale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
@@ -44,10 +44,10 @@ function Entity.player(quadlist)
 
 		local A, B = 0, 0
 		if love.keyboard.isDown('left') then
-			A = Lib.clamp(self.velocity.x - dt * self.speed_mul, -self.speed, 0)
+			A = Lib.clamp(self.velocity.x - dt * self.speed_mul, -self.speed_max, 0)
 		end
 		if love.keyboard.isDown('right') then
-			B = Lib.clamp(self.velocity.x + dt * self.speed_mul, 0, self.speed)
+			B = Lib.clamp(self.velocity.x + dt * self.speed_mul, 0, self.speed_max)
 		end
 		self.velocity.x = B + A
 
@@ -57,9 +57,19 @@ function Entity.player(quadlist)
 			p.time = 0
 		end
 
+--{
+--	{
+--		x : self.position.x,
+--		y : self.position.y + self.size.y
+--	},
+--	{ self.position.x + self.size.x / 2, self.position.y }
+--	{ self.position.x - self.size.x / 2, self.position.y }
+--	{ self.position.x + self.size.x / 2, self.position.y + self.size.y }
+--	{ self.position.x - self.size.x / 2, self.position.y + self.size.y }
+--}
+
 		local test = Meshes:seekCollision(Point.new(self.position.x, self.position.y + self.velocity.y +  self.size.y))
 		if test then
-			ttest = test.center.y - test.size - self.size.y
 			self.position.y = Lib.clamp(self.position.y + self.velocity.y, self.position.y , test.center.y - test.size - self.size.y)
 			self.velocity.y = 0
 		end

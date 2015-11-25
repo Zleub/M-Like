@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:48:39
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-24 19:16:11
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-25 17:16:36
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -32,26 +32,38 @@ function Meshes:add(vertice, image)
 		mesh = love.graphics.newMesh(vertice.table, image, 'fan')
 	}
 
-	Event:register('mousereleased', m)
+	-- Event:register('mousereleased', m)
 	table.insert(self.queue, m)
 end
 
 function Meshes:move(point)
-	-- Lib.debug(point)
 	for k,v in ipairs(self.queue) do
 		v.vertice:move(point)
 		v:refresh()
 	end
 end
 
-function Meshes:seekCollision(point)
+function Meshes:seekCollision(entity)
 	local w,h = love.window.getDimensions()
 
 	for i,v in ipairs(self.queue) do
 		if 0 < v.vertice.center.x and v.vertice.center.x < w and
 			0 < v.vertice.center.y and v.vertice.center.y < h then
-				local test = v.vertice:collides(point)
-				if test then return test end
+
+				local xAxis = v.vertice:getXAxis()
+				local yAxis = v.vertice:getYAxis()
+				local yEntity = entity.position.y + entity.size.y + entity.velocity.y
+				local xEntity = entity.position.x + entity.size.x + entity.velocity.x
+
+				if (yAxis[1] < yEntity and yEntity < yAxis[2]) and
+					(xAxis[1] < xEntity and xEntity < xAxis[2])
+				then
+					print(xAxis[1] - xEntity, xAxis[2] - xEntity)
+
+					-- entity.position.x = xAxis[1] - entity.size.x
+					-- entity.position.y = yAxis[1] - entity.size.y
+					-- entity.velocity.y = 0
+				end
 		end
 	end
 end

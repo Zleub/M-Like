@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-28 20:31:30
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-24 19:28:50
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-25 15:27:10
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -20,11 +20,11 @@ function Entity.player(quadlist)
 
 	p.time = 0
 	p.index = 1
-	p.size = Point.new(42, 42)
-	p.scale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
-	p.Pscale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
+	p.size = Point.new(21, 42)
 	p.position = Point.new(100, 100)
 	p.velocity = Point.new(0, 0)
+	p.scale = Point.new(p.size.x / quadlist.tileset.width * 2, p.size.y / quadlist.tileset.height)
+	p.Pscale = Point.new(p.size.x / quadlist.tileset.width * 2, p.size.y / quadlist.tileset.height)
 
 	-- Watched
 	p.speed_mul = 50
@@ -59,46 +59,22 @@ function Entity.player(quadlist)
 			p.time = 0
 		end
 
---{
---	{
---		x : self.position.x,
---		y : self.position.y + self.size.y
---	},
---	{ self.position.x + self.size.x / 2, self.position.y }
---	{ self.position.x - self.size.x / 2, self.position.y }
---	{ self.position.x + self.size.x / 2, self.position.y + self.size.y }
---	{ self.position.x - self.size.x / 2, self.position.y + self.size.y }
---}
+		Meshes:seekCollision(player)
 
-		local test = Meshes:seekCollision(Point.new(self.position.x, self.position.y + self.velocity.y +  self.size.y))
-		if test then
-			self.position.y = Lib.clamp(self.position.y + self.velocity.y, self.position.y , test.center.y - test.size - self.size.y)
-			self.velocity.y = 0
-		end
-
-		local test = Meshes:seekCollision(Point.new(self.position.x + self.size.x / 2, self.position.y + self.size.y / 2))
-		if test then
-			self.position.x = Lib.clamp(self.position.x + self.velocity.x, self.position.x, test.center.x - test.size - self.size.x / 2)
-		end
-		local test = Meshes:seekCollision(Point.new(self.position.x - self.size.x / 2, self.position.y + self.size.y / 2))
-		if test then
-			self.position.x = Lib.clamp(self.position.x + self.velocity.x, test.center.x + test.size + self.size.x / 2, self.position.x)
-		end
-
-		-- I NEED THE VELOCITY TO BE TO RECIPIENT OF A FRAME MOVEMENT
-		-- such as self.velocity can be the only thing applied to the position
 		self.position = Point.seum(self.position, self.velocity)
 		self.position.y = Lib.clamp(self.position.y, 0, love.window.getHeight() - self.size.y)
 		if self.position.y == love.window.getHeight() - self.size.y then self.velocity.y = 0 end
 	end
 	p.draw = function (self)
+		love.graphics.print(self.position.x..' '..self.position.y)
+
 		if self.scale.x > 0 then
 			love.graphics.draw(quadlist[0], quadlist[self.index], self.position.x - self.size.x / 2, self.position.y, 0, self.scale.x, self.scale.y)
 		else
 			love.graphics.draw(quadlist[0], quadlist[self.index], self.position.x + self.size.x / 2, self.position.y, 0, self.scale.x, self.scale.y)
 		end
 
-		love.graphics.point(self.position.x, self.position.y + self.size.y)
+		love.graphics.point(self.position.x, self.position.y)
 
 	end
 

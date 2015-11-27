@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:48:39
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-25 17:16:36
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-27 17:17:14
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -58,11 +58,18 @@ function Meshes:seekCollision(entity)
 				if (yAxis[1] < yEntity and yEntity < yAxis[2]) and
 					(xAxis[1] < xEntity and xEntity < xAxis[2])
 				then
-					print(xAxis[1] - xEntity, xAxis[2] - xEntity)
 
-					-- entity.position.x = xAxis[1] - entity.size.x
-					-- entity.position.y = yAxis[1] - entity.size.y
-					-- entity.velocity.y = 0
+
+					local minx = math.min(xEntity - xAxis[1], xAxis[2] - xEntity)
+					local miny = math.min(yEntity - yAxis[1], yAxis[2] - yEntity)
+
+					print(minx, miny)
+					if minx < miny then
+						-- entity.position.x = xAxis[1] - entity.size.x
+					else
+					end
+						entity.position.y = entity.position.y
+						entity.velocity.y = 0
 				end
 		end
 	end

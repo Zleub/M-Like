@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:10:55
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-24 19:12:44
+-- :ddddddddddhyyddddddddddd: Modified: 2015-11-27 15:30:54
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -32,7 +32,7 @@ Modes =  {
 	'debug'
 }
 
-love.mode = Modes[1]
+love.mode = Modes[2]
 
 function love.load()
 	face = love.graphics.newImage('assets/image.bmp')

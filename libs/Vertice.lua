@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-26 21:14:39
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-25 15:19:07
+-- :ddddddddddhyyddddddddddd: Modified: 2015-12-01 03:32:46
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -20,17 +20,7 @@ function Vertice.newFromCenter(x, y, size)
 
 	v.size = size
 	v.center = Point.new(x, y)
-	v.getXAxis = function(self)
-		return { self.center.x - self.size, self.center.x + self.size }
-	end
-	v.getYAxis = function(self)
-		return { self.center.y - self.size, self.center.y + self.size }
-	end
-	-- v.collides = function(self, point)
-	-- 	if point:isBoxedFromCenter(self.center, Point.new(size, size)) then
-	-- 		return self
-	-- 	end
-	-- end
+
 	v.move = function (self, point)
 		-- Lib.debug(point)
 		self.center.x = self.center.x + point.x

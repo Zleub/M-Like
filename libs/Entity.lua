@@ -6,7 +6,7 @@
 -- /ddddy:oddddddddds:sddddd/ By adebray - adebray
 -- sdddddddddddddddddddddddds
 -- sdddddddddddddddddddddddds Created: 2015-10-28 20:31:30
--- :ddddddddddhyyddddddddddd: Modified: 2015-11-25 15:27:10
+-- :ddddddddddhyyddddddddddd: Modified: 2015-12-01 09:07:40
 --  odddddddd/`:-`sdddddddds
 --   +ddddddh`+dh +dddddddo
 --    -sdddddh///sdddddds-
@@ -20,18 +20,37 @@ function Entity.player(quadlist)
 
 	p.time = 0
 	p.index = 1
-	p.size = Point.new(21, 42)
+	p.size = Point.new(42, 42)
 	p.position = Point.new(100, 100)
 	p.velocity = Point.new(0, 0)
-	p.scale = Point.new(p.size.x / quadlist.tileset.width * 2, p.size.y / quadlist.tileset.height)
-	p.Pscale = Point.new(p.size.x / quadlist.tileset.width * 2, p.size.y / quadlist.tileset.height)
+	p.scale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
+	p.Pscale = Point.new(p.size.x / quadlist.tileset.width, p.size.y / quadlist.tileset.height)
 
 	-- Watched
-	p.speed_mul = 50
+	p.speed_mul = 42
 	p.mass = 42
 	p.speed_max = 8
 	p.jump = 12
 
+	-- p.keypressed = function (self, key)
+	-- 	function move(value)
+	-- 		if key == 'left' then
+	-- 			self.scale.x = self.Pscale.x
+	-- 			self.position.x = self.position.x - value
+	-- 		end
+	-- 		if key == 'right' then
+	-- 			self.scale.x = self.Pscale.x * -1
+	-- 			self.position.x = self.position.x + value
+	-- 		end
+	-- 		if key == 'up' then self.position.y = self.position.y - value end
+	-- 		if key == 'down' then self.position.y = self.position.y + value end
+	-- 	end
+	-- 	if love.keyboard.isDown('lshift') then
+	-- 		move(10)
+	-- 	else
+	-- 		move(1)
+	-- 	end
+	-- end
 	p.keypressed = function (self, key)
 		if key == 'left' then self.scale.x = self.Pscale.x end
 		if key == 'right' then self.scale.x = self.Pscale.x * -1 end
@@ -69,12 +88,15 @@ function Entity.player(quadlist)
 		love.graphics.print(self.position.x..' '..self.position.y)
 
 		if self.scale.x > 0 then
-			love.graphics.draw(quadlist[0], quadlist[self.index], self.position.x - self.size.x / 2, self.position.y, 0, self.scale.x, self.scale.y)
+			love.graphics.draw(quadlist[0], quadlist[self.index], self.position.x, self.position.y, 0, self.scale.x, self.scale.y)
 		else
-			love.graphics.draw(quadlist[0], quadlist[self.index], self.position.x + self.size.x / 2, self.position.y, 0, self.scale.x, self.scale.y)
+			love.graphics.draw(quadlist[0], quadlist[self.index], self.position.x + self.size.x, self.position.y, 0, self.scale.x, self.scale.y)
 		end
 
 		love.graphics.point(self.position.x, self.position.y)
+		-- love.graphics.point(self.position.x + self.size.x, self.position.y)
+		-- love.graphics.point(self.position.x + self.size.x, self.position.y + self.size.y)
+		-- love.graphics.point(self.position.x, self.position.y + self.size.y)
 
 	end
 
